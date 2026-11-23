@@ -1,65 +1,65 @@
 import 'package:flutter/material.dart';
 import 'detailproduk.dart';
+import 'gambar_hp.dart';
 
-class Katalog extends StatelessWidget {
-  const Katalog({super.key});
+class KatalogHp extends StatelessWidget {
+  const KatalogHp({super.key});
 
-  // 1 & 3. Data Produk Jual HP + informasi 'rating'
   static const List<Map<String, String>> items = [
-    {
-      'nama': 'iPhone 15 Pro',
-      'kategori': 'Flagship',
-      'harga': 'Rp 18.999.000',
-      'rating': '4.9',
-      'gambar': 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=500',
-      'deskripsi': 'Chip A17 Pro, bodi titanium ringan, kamera Pro 48MP.',
-    },
     {
       'nama': 'Samsung Galaxy S24',
       'kategori': 'Flagship',
-      'harga': 'Rp 13.999.000',
+      'harga': 'Rp 12.999.000',
       'rating': '4.8',
-      'gambar': 'https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=500',
-      'deskripsi': 'Layar Dynamic AMOLED 2X dengan fitur Galaxy AI cerdas.',
+      'gambar': 'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=600',
+      'deskripsi': 'Layar Dynamic AMOLED 6.2 inci, kamera AI 50MP, dan performa kencang untuk multitasking.',
     },
     {
-      'nama': 'Xiaomi 14T Pro',
+      'nama': 'iPhone 15',
+      'kategori': 'iOS',
+      'harga': 'Rp 13.499.000',
+      'rating': '4.9',
+      'gambar': 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600',
+      'deskripsi': 'Desain aluminium tangguh dengan Dynamic Island, chip A16 Bionic, dan kamera utama 48MP.',
+    },
+    {
+      'nama': 'Xiaomi Redmi Note 13 Pro',
       'kategori': 'Mid-Range',
-      'harga': 'Rp 8.499.000',
+      'harga': 'Rp 3.799.000',
       'rating': '4.7',
-      'gambar': 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500',
-      'deskripsi': 'Lensa optik Leica Summilux dan pengisian daya 120W HyperCharge.',
+      'gambar': 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=600',
+      'deskripsi': 'Layar AMOLED 120Hz, pengisian cepat 67W, dan baterai tahan lama untuk aktivitas harian.',
     },
     {
-      'nama': 'OPPO Reno 11 5G',
-      'kategori': 'Mid-Range',
-      'harga': 'Rp 5.999.000',
+      'nama': 'Google Pixel 8a',
+      'kategori': 'Android',
+      'harga': 'Rp 7.999.000',
       'rating': '4.6',
-      'gambar': 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500',
-      'deskripsi': 'Kamera portrait telefoto jernih dengan desain ultra tipis.',
+      'gambar': 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600',
+      'deskripsi': 'Kamera komputasional khas Google dengan hasil foto tajam di berbagai kondisi cahaya.',
     },
     {
-      'nama': 'Vivo V30 5G',
-      'kategori': 'Mid-Range',
-      'harga': 'Rp 5.499.000',
-      'rating': '4.6',
-      'gambar': 'https://images.unsplash.com/photo-1580910051074-3eb694886505?w=500',
-      'deskripsi': 'Aura Light Portrait untuk foto malam hari yang natural.',
-    },
-    {
-      'nama': 'Redmi Note 13',
-      'kategori': 'Entry-Level',
-      'harga': 'Rp 2.499.000',
+      'nama': 'OPPO Reno 11F 5G',
+      'kategori': '5G',
+      'harga': 'Rp 4.599.000',
       'rating': '4.5',
-      'gambar': 'https://images.unsplash.com/photo-1565849904461-04a58ad377e0?w=500',
-      'deskripsi': 'Layar AMOLED 120Hz dan kamera utama 108MP yang tajam.',
+      'gambar': 'https://images.unsplash.com/photo-1580910051074-3eb694886505?w=600',
+      'deskripsi': 'Bodi tipis ringan dengan dukungan konektivitas 5G dan layar jernih nyaman di mata.',
     },
   ];
 
-  // Widget pembantu judul
+  void _bukaDetail(BuildContext context, Map<String, String> item) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DetailHp(produk: item),
+      ),
+    );
+  }
+
   Widget _judul(String teks, IconData ikon) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 12, 12, 4),
+      padding: const EdgeInsets.fromLTRB(12, 12, 12, 6),
       child: Row(
         children: [
           Icon(ikon, color: Colors.indigo),
@@ -69,7 +69,6 @@ class Katalog extends StatelessWidget {
             style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Colors.indigo,
             ),
           ),
         ],
@@ -77,159 +76,91 @@ class Katalog extends StatelessWidget {
     );
   }
 
-  // Widget pembantu gambar dari internet
-  static Widget _gambar(String url, {double? size}) {
-    return Image.network(
-      url,
-      width: size,
-      height: size,
-      fit: BoxFit.contain,
-      loadingBuilder: (context, child, progress) {
-        if (progress == null) return child;
-        return const Center(
-          child: CircularProgressIndicator(strokeWidth: 2),
-        );
-      },
-      errorBuilder: (context, error, stack) =>
-          const Icon(Icons.smartphone, size: 40, color: Colors.grey),
-    );
-  }
-
-  // Navigasi ke halaman DetailProduk
-  void _bukaDetail(BuildContext context, Map<String, String> item) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => DetailProduk(produk: item),
-      ),
-    );
-  }
-
-  // 5. Fungsi menampilkan SnackBar Favorit
-  void _tambahFavorit(BuildContext context, String namaProduk) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('$namaProduk Ditambahkan ke Favorit'),
-        backgroundColor: Colors.indigo,
-        duration: const Duration(seconds: 2),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final kolomGrid = screenWidth >= 600 ? 3 : 2;
+
     return Scaffold(
-      backgroundColor: Colors.indigo[50],
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        title: const Text(
-          'Jual HP',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
+        title: const Text('Jual HP'),
         backgroundColor: Colors.indigo,
+        foregroundColor: Colors.white,
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // BAGIAN 1: DAFTAR PRODUK (LISTVIEW)
-          _judul('Daftar HP Terbaru', Icons.list_alt),
+          _judul('Daftar HP', Icons.view_list),
           Expanded(
+            flex: 4,
             child: ListView.builder(
-              itemCount: items.length,
               padding: const EdgeInsets.symmetric(horizontal: 8),
+              itemCount: items.length,
               itemBuilder: (context, index) {
                 final item = items[index];
                 return Card(
-                  elevation: 2,
+                  margin: const EdgeInsets.only(bottom: 8),
                   child: ListTile(
                     onTap: () => _bukaDetail(context, item),
-                    leading: _gambar(item['gambar']!, size: 55),
+                    leading: GambarHp.tampil(item['gambar']!, size: 56),
                     title: Text(
                       item['nama']!,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontWeight: FontWeight.w600),
                     ),
-                    subtitle: Row(
-                      children: [
-                        Text(item['harga']!),
-                        const SizedBox(width: 10),
-                        const Icon(Icons.star, color: Colors.amber, size: 16),
-                        Text(' ${item['rating']}'),
-                      ],
-                    ),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.favorite_border, color: Colors.pink),
-                      onPressed: () => _tambahFavorit(context, item['nama']!),
-                    ),
+                    subtitle: Text('${item['harga']!} • ★ ${item['rating']!}'),
+                    trailing: Chip(label: Text(item['kategori']!)),
                   ),
                 );
               },
             ),
           ),
-
-          // BAGIAN 2: GALERI PRODUK RESPONSIF (GRIDVIEW)
           _judul('Galeri HP', Icons.grid_view),
           Expanded(
-            // 4. LayoutBuilder untuk menentukan jumlah kolom responsif
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                // Jika lebar layar > 600px (layar lebar/tablet) = 3 kolom, ponsel = 2 kolom
-                int jumlahKolom = constraints.maxWidth > 600 ? 3 : 2;
-
-                return GridView.count(
-                  crossAxisCount: jumlahKolom,
-                  childAspectRatio: 0.85,
-                  padding: const EdgeInsets.all(8),
-                  children: List.generate(items.length, (index) {
-                    final item = items[index];
-                    return Card(
-                      elevation: 2,
-                      child: InkWell(
-                        onTap: () => _bukaDetail(context, item),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              // Baris atas: Rating & Tombol Favorit
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      const Icon(Icons.star, color: Colors.amber, size: 16),
-                                      Text(
-                                        item['rating']!,
-                                        style: const TextStyle(fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  ),
-                                  InkWell(
-                                    onTap: () => _tambahFavorit(context, item['nama']!),
-                                    child: const Icon(
-                                      Icons.favorite_border,
-                                      color: Colors.pink,
-                                      size: 20,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Expanded(child: _gambar(item['gambar']!)),
-                              const SizedBox(height: 6),
-                              Text(
-                                item['nama']!,
-                                style: const TextStyle(fontWeight: FontWeight.bold),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              Text(
-                                item['harga']!,
-                                style: const TextStyle(color: Colors.indigo),
-                              ),
-                            ],
+            flex: 5,
+            child: GridView.count(
+              padding: const EdgeInsets.all(8),
+              crossAxisCount: kolomGrid,
+              crossAxisSpacing: 8,
+              mainAxisSpacing: 8,
+              childAspectRatio: 0.8,
+              children: List.generate(items.length, (index) {
+                final item = items[index];
+                return Card(
+                  clipBehavior: Clip.antiAlias,
+                  child: InkWell(
+                    onTap: () => _bukaDetail(context, item),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: GambarHp.tampil(item['gambar']!),
                           ),
-                        ),
+                          const SizedBox(height: 6),
+                          Text(
+                            item['nama']!,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            item['harga']!,
+                            style: const TextStyle(
+                              color: Colors.indigo,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Text(
+                            '★ ${item['rating']!}',
+                            style: const TextStyle(fontSize: 12),
+                          ),
+                        ],
                       ),
-                    );
-                  }),
+                    ),
+                  ),
                 );
-              },
+              }),
             ),
           ),
         ],
